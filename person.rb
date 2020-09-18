@@ -8,6 +8,9 @@ class Person
     @height = height
     @weight = weight
 
+    # automatically creating singleton methods
+    create_method(name)
+
     def method_missing(method_name, *args, &block)
       if method_name.to_s.include?('summary')
         # dynamically creating methods
@@ -18,9 +21,17 @@ class Person
     end
   end
 
-  def self.create_method(name)
-    define_method("#{name}s_bio") do |args|
+  # creating singleton method so we can use during object initialization
+  def create_method(name)
+    define_singleton_method("#{name}s_bio") do |args|
       "This is my bio with args #{args}"
     end
   end
+
+  # defining methods manually
+  # def self.create_method(name)
+  #   define_method("#{name}s_bio") do |args|
+  #     "This is my bio with args #{args}"
+  #   end
+  # end
 end
